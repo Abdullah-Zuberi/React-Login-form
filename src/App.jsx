@@ -1,45 +1,105 @@
 import React, { useState } from "react";
 
 const App = () => {
+  const [fullName, setFullName] = useState({
+    fname: " ",
+    lname: " ",
+    email: " ",
+    phone: " ",
+  });
 
-  const [name, setName] = useState(" ");
-  const [lastname, setLastName]= useState("");
-  const [fullName, setFullName] = useState();
-  const [LastNamenew, setLastNameNew] = useState("");
+  const inputEvent = (event) => {
+    console.log(event.target.value);
+    console.log(event.target.name);
+    
+    // const value= event.target.value;
+    // const name= event.target.name;
 
-  const onSubmits=(event) =>{
+    const{value,name}= event.target;  
+
+   setFullName((preValue) => {
+        // console.log(preValue);
+        if(name === 'fName'){
+        return{
+        fname: value,
+        lname: preValue.lname,
+        email: preValue.email,
+        phone: preValue.phone,
+        };
+       }else if(name === 'lName'){
+        return{
+        fname: preValue.fname,
+        lname: value,
+        email: preValue.email,
+        phone: preValue.phone,
+        };
+      }
+      else if(name === 'email'){
+        return{
+        fname: preValue.fname,
+        lname: preValue.lname,
+        email: value,
+        phone: preValue.phone,
+        };
+      }
+      else if(name === 'phone'){
+        return{
+        fname: preValue.fname,
+        lname: preValue.lname,
+        email: preValue.email,
+        phone: value,
+        };
+      }
+   });
+  }; 
+
+  const onSubmits = (event) => {
     event.preventDefault();
-    setFullName(name);
-    setLastNameNew(lastname);
-  }
-
-  const inputEvent=(event) => {
-    console.log( event.target.value );   
-    setName(event.target.value)
+    alert("form submitted");
   };
-
-  const inputEventTwo = (event) => {
-    setLastName(event.target.value);
-  }
 
   return (
     <>
-    <div className="main_div">
-    <form onSubmits={onSubmits}>
-      <div>
-        <h1>Hello{fullName} {LastNamenew}</h1>
-        <input type="text" placeholder="Enter Your Name"  
-        onChange={inputEvent}
-        // value={name}
-        />
-        <br/>
-        <input type="text" placeholder="Enter Your Last Name"  
-        onChange={inputEventTwo}
-        value={lastname}
-        />
-        <button type='submit' onClick={onSubmits}> Submit Me👍 </button>
-      </div>
-      </form>
+      <div className="main_div">
+        <form onSubmit={onSubmits}>
+          <div>
+            <h1>
+             Hello {fullName.fname} {fullName.lname} 
+            </h1>
+            <p>{fullName.email}</p>
+            <p>{fullName.phone}</p>
+            <input
+              type="text"
+              placeholder="Enter Your First Name"
+              name="fName"
+              onChange={inputEvent}
+              value={fullName.fname.placeholder}
+            />
+            <input
+              type="text"
+              placeholder="Enter Your Last Name"
+              name="lName"
+              onChange={inputEvent}
+              value={fullName.lname.placeholder}
+            />
+             <input
+              type="email"
+              placeholder="Enter Your E-mail Address"
+              name="email"
+              onChange={inputEvent}
+              value={fullName.email.placeholder}
+            />
+
+             <input
+              type="number"
+              placeholder="Enter Your Mobile Number"
+              name="phone"
+              onChange={inputEvent}
+              value={fullName.phone.placeholder}
+            />
+            <button type="submit">Submit Me👍</button>
+          </div>
+        </form>
       </div>
     </>
   );
